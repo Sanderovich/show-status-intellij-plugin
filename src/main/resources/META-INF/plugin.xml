@@ -1,0 +1,32 @@
+<idea-plugin>
+    <id>nl.sanderaalbers.ShowStatus</id>
+    <name>Show Status</name>
+    <vendor email="sander.goohoo@gmail.com" url="https://www.goohoo.nl">GooHoo</vendor>
+
+    <description>Receive and show GooHoo status descriptions in User Interface</description>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <applicationService serviceImplementation="nl.sanderaalbers.database.DatabaseConnection" />
+
+        <applicationService serviceImplementation="nl.sanderaalbers.settings.ShowStatusSettingsState"/>
+        <applicationConfigurable parentId="tools" instance="nl.sanderaalbers.settings.ShowStatusSettingsConfigurable"
+                                 id="nl.sanderaalbers.settings.ShowStatusSettingsConfigurable"
+                                 displayName="Show Status Settings"/>
+
+        <notificationGroup id="ShowStatusNotificationGroup" displayType="BALLOON" key="showstatus.notification.group"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="nl.sanderaalbers.actions.OnSelect" class="nl.sanderaalbers.actions.OnSelect" text="Show Status"
+                description="When text is selected receive possible status description">
+            <keyboard-shortcut first-keystroke="control alt Q" second-keystroke="C" keymap="$default"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
+    </actions>
+</idea-plugin>
